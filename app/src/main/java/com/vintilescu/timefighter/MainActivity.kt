@@ -4,11 +4,14 @@ package com.vintilescu.timefighter
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
+
+    internal val TAG = MainActivity::class.java.simpleName
 
     internal lateinit var tapMeButton: Button // button "Tap Me" property
     internal lateinit var gameScoreTextView: TextView // TextView "Game score" property
@@ -24,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        Log.d(TAG, "onCreate called. Score is: $score")
 
         tapMeButton = findViewById<Button>(R.id.tap_me_button)
         gameScoreTextView = findViewById<TextView>(R.id.game_score_text_view)
