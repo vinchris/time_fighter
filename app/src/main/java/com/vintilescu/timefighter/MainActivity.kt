@@ -40,12 +40,41 @@ class MainActivity : AppCompatActivity() {
         timeLeftTextView = findViewById<TextView>(R.id.time_left_text_view)
 
         // first implementation of reset game score: gameScoreTextView.text = getString(R.string.your_score, score.toString())
-        // second implementation via method:
-        resetGame()
+        // second implementation via method: resetGame()
+        //third implmentation via if condition which check for previous value of saved instance state:
+        if (savedInstanceState != null) {
+            score = savedInstanceState.getInt(SCORE_KEY)
+            timeLeftOnTimer = savedInstanceState.getLong(TIME_LEFT_KEY)
+            restoreGame()
+        }else{
+            //if no saved instance state then restore the game to its default values
+            resetGame()
+        }
 
         tapMeButton.setOnClickListener { view ->
             incrementScore()
         }
+    }
+
+    private fun restoreGame(){
+        gameScoreTextView.text = getString(R.string.your_score, score.toString())
+        val restoredTime = timeLeftOnTimer / 1000
+        timeLeftTextView.text = getString(R.string.time_left, restoredTime.toString())
+
+        countDownTimer = object : CountDownTimer(timeLeftOnTimer, countDownInterval) {
+            override fun onTick(millisUnitsUntilFinished: Long) {
+                timeLeftOnTimer = millisUnitsUntilFinished
+                val timeLeft = millisUnitsUntilFinished / 1000
+                timeLeftTextView.text = getString(R.string.time_left, timeLeft.toString())
+            }
+
+            override fun onFinish() {
+                endGame()
+            }
+        }
+
+        countDownTimer.start()
+        gameStarted = false
     }
 
     private fun startGame() {
