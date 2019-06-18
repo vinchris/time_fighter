@@ -9,6 +9,7 @@
 
     <TextView
             android:text="@string/your_score"
+            android:textColor="@color/colorText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/game_score_text_view"
@@ -17,6 +18,7 @@
             android:layout_marginStart="16dp" android:layout_marginTop="8dp"/>
     <TextView
             android:text="@string/time_left"
+            android:textColor="@color/colorText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/time_left_text_view"
@@ -26,6 +28,7 @@
             android:layout_marginRight="16dp"/>
     <Button
             android:text="@string/tap_me"
+            android:background="@color/colorButtonBackground"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tap_me_button" app:layout_constraintStart_toStartOf="parent"

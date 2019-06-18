@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+     android:fillAfter="true"
+     android:shareInterpolator="@android:anim/bounce_interpolator">
+    <!--set: A container that holds other animation elements (<alpha>, <scale>, <translate>, <rotate>) or other <set> elements. Represents an AnimationSet.-->
+    <!--duration: The time in milliseconds of the animation-->
+    <!--fromXScale: Float. Starting X size offset, where 1.0 is no change.-->
+    <!--fromYScale: Float. Starting Y size offset, where 1.0 is no change.-->
+    <!--toXScale: Float. The X coordinate to remain fixed when the object is scaled.-->
+    <!--toYScale: Float. The Y coordinate to remain fixed when the object is scaled.-->
+    <!--pivotX: Float. The X coordinate to remain fixed when the object is scaled.-->
+    <!--pivotY: Float. The Y coordinate to remain fixed when the object is scaled.-->
+    <scale
+            android:duration="2000"
+            android:fromXScale="2.0"
+            android:fromYScale="2.0"
+            android:pivotX="50%"
+            android:pivotY="50%"
+            android:toXScale="1.0"
+            android:toYScale="1.0"/>
+</set>
