@@ -1,10 +1,14 @@
 package com.vintilescu.timefighter
 
 //import android.content.IntentSender
+import android.annotation.SuppressLint
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.support.v7.app.AlertDialog
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.TextView
@@ -48,7 +52,7 @@ class MainActivity : AppCompatActivity() {
             score = savedInstanceState.getInt(SCORE_KEY)
             timeLeftOnTimer = savedInstanceState.getLong(TIME_LEFT_KEY)
             restoreGame()
-        }else{
+        } else {
             //if no saved instance state then restore the game to its default values
             resetGame()
         }
@@ -61,7 +65,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun restoreGame(){
+    private fun restoreGame() {
         gameScoreTextView.text = getString(R.string.your_score, score.toString())
         val restoredTime = timeLeftOnTimer / 1000
         timeLeftTextView.text = getString(R.string.time_left, restoredTime.toString())
@@ -145,5 +149,48 @@ class MainActivity : AppCompatActivity() {
             }
         }
         gameStarted = false
+    }
+
+    /**
+     * we're overriding the method that handles the creation of the activity's standard menu
+     * and you are overriding the default implementation to show your own menu
+     */
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
+        /** the menuInflater is an existing property
+        from the parent class AppCompatActivity.kt
+        which is used to instantiate menu from xml files**/
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    /**
+     * this overridden method handles menu item selection where we look for
+     * the ID of the menu item we added, if that is the selected item then
+     * we execute a method to show app information
+     */
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if(item!!.itemId == R.id.action_about){
+            showInfo()
+        }
+        return true
+    }
+
+    /**
+     * method which creates an Alert Dialog on menu item tap
+     */
+    private fun showInfo(){
+        Log.d(TAG, "Info Icon clicked.")
+        // the info title contains the app version number, the user can see immediately which version he/she is using
+        val dialogTitle = getString(R.string.about_title, BuildConfig.VERSION_NAME)
+        val dialogMessage = getString(R.string.about_message)
+        // the dialog needs a context instance, so that the dialog knows where it should appear
+        /**
+         * ALL ACTIVITIES ARE SUBCLASSES OF CONTEXT
+         */
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(dialogTitle)
+        builder.setMessage(dialogMessage)
+        builder.create().show()
     }
 }
