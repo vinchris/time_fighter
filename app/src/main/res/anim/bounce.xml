@@ -1,21 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <set xmlns:android="http://schemas.android.com/apk/res/android"
      android:fillAfter="true"
-     android:shareInterpolator="@android:anim/bounce_interpolator">
+     android:interpolator="@android:anim/bounce_interpolator">
     <!--set: A container that holds other animation elements (<alpha>, <scale>, <translate>, <rotate>) or other <set> elements. Represents an AnimationSet.-->
-    <!--duration: The time in milliseconds of the animation-->
-    <!--fromXScale: Float. Starting X size offset, where 1.0 is no change.-->
-    <!--fromYScale: Float. Starting Y size offset, where 1.0 is no change.-->
-    <!--toXScale: Float. The X coordinate to remain fixed when the object is scaled.-->
-    <!--toYScale: Float. The Y coordinate to remain fixed when the object is scaled.-->
-    <!--pivotX: Float. The X coordinate to remain fixed when the object is scaled.-->
-    <!--pivotY: Float. The Y coordinate to remain fixed when the object is scaled.-->
+    <!--fillAfter: if this is set to "true", that means your view (e.g.: the button)
+                    will not return to its original position (before the animation),
+                    instead it will remain at the last position (after the animation)-->
+    <!--interpolator: defines the acceleration curve of the animation,
+                        in our case we set it to the predefined "bounce_interpolator"
+                        which comes with Android-->
+    <!--scale: defines the bounce animation, you will carry out a scale transformation,
+                where you'll scale the button up and down to make it look as if it's bouncing.
+                The scaling attributes defined inside describe how the scaling occurs and for how long-->
     <scale
             android:duration="2000"
-            android:fromXScale="2.0"
-            android:fromYScale="2.0"
+            android:fromXScale="1.5"
+            android:fromYScale="1.5"
             android:pivotX="50%"
             android:pivotY="50%"
             android:toXScale="1.0"
             android:toYScale="1.0"/>
+    <!--duration: The time in milliseconds of the animation, how long the transformation will take-->
+    <!--fromXScale: Float. Starting X size offset, where 1.0 is no change. This defines the starting X scale,
+                    e.g.: it will start at twice the width of the button-->
+    <!--fromYScale: Float. Starting Y size offset, where 1.0 is no change.This defines the starting Y scale,
+                    e.g.: it will start at twice the height of the button-->
+    <!--toXScale: Float. The X coordinate to remain fixed when the object is scaled.
+                    This indicates the final scale value of the transformation,
+                    e.g.: 1.0 scale the button to its original size-->
+    <!--toYScale: Float. The Y coordinate to remain fixed when the object is scaled.
+                    This indicates the final scale value of the transformation,
+                    e.g.: 1.0 scale the button to its original size-->
+    <!--pivotX: Float. The X coordinate to remain fixed when the object is scaled. The pivot point or the origin of the animation,
+                    e.g.: 50% means you want it to start from the center-->
+    <!--pivotY: Float. The Y coordinate to remain fixed when the object is scaled. The pivot point or the origin of the animation,
+                    e.g.: 50% means you want it to start from the center-->
 </set>
