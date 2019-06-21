@@ -6,5 +6,8 @@
     <string name="game_over_message">Time is up! your score is: %s</string>
     <string name="about_menu">About</string>
     <string name="about_title">About the App %s</string>
-    <string name="about_message">Hello, my name is Cristian VIntilescu and I have created this app for educational purposes, have fun. :)</string>
+    <string name="about_message">Hello, my name is Cristian VIntilescu and I hav created this app for educational
+        purposes, have fun. :)
+    </string>
+    <string name="max_score"></string>
 </resources>

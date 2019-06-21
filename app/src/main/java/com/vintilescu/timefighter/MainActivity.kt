@@ -1,7 +1,6 @@
 package com.vintilescu.timefighter
 
-//import android.content.IntentSender
-import android.annotation.SuppressLint
+import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -21,8 +20,13 @@ class MainActivity : AppCompatActivity() {
     internal lateinit var tapMeButton: Button // button "Tap Me" property
     internal lateinit var gameScoreTextView: TextView // TextView "Game score" property
     internal lateinit var timeLeftTextView: TextView // TextView "Time left" property
+    internal lateinit var maxScoreTextView: TextView // TextView "Max Score" property
 
     internal var score = 0
+    private var myPreferences = "myPrefs"
+    private var EMPTY = "";
+    private var MAX_SCORE = "MAX_SCORE"
+    private val maxScoreText = "Up until now, your Max Score is: "
 
     internal var gameStarted = false
     internal lateinit var countDownTimer: CountDownTimer
@@ -39,11 +43,23 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         Log.d(TAG, "onCreate called. Score is: $score .")
 
         tapMeButton = findViewById<Button>(R.id.tap_me_button)
-        gameScoreTextView = findViewById<TextView>(R.id.game_score_text_view)
-        timeLeftTextView = findViewById<TextView>(R.id.time_left_text_view)
+        gameScoreTextView = findViewById(R.id.game_score_text_view)
+        timeLeftTextView = findViewById(R.id.time_left_text_view)
+        maxScoreTextView = findViewById(R.id.max_score_text_view)
+
+        val sharedPreferences = getSharedPreferences(myPreferences, Context.MODE_PRIVATE)
+        val previousMaxScore = sharedPreferences.getString(MAX_SCORE, EMPTY)
+
+        Log.d(TAG, "previousMaxScore is: $previousMaxScore .")
+        if (previousMaxScore == EMPTY) {
+            maxScoreTextView.text = maxScoreText + "0"
+        } else {
+            maxScoreTextView.text = maxScoreText + sharedPreferences.getString(MAX_SCORE, EMPTY)
+        }
 
         // first implementation of reset game score: gameScoreTextView.text = getString(R.string.your_score, score.toString())
         // second implementation via method: resetGame()
@@ -93,7 +109,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun endGame() {
+        val sharedPreferences = getSharedPreferences(myPreferences, Context.MODE_PRIVATE)
+        val previousMaxScore = sharedPreferences.getString(MAX_SCORE, EMPTY)
+
+        Log.d(TAG, "previousMaxScore is: $previousMaxScore .")
+        if (previousMaxScore == EMPTY || previousMaxScore.toInt() < score) {
+            Log.d(TAG, "score ( $score ) is greater than previousMaxScore ( $previousMaxScore ).")
+            val editor = sharedPreferences.edit()
+            editor.putString(MAX_SCORE, score.toString())
+            editor.apply()
+            maxScoreTextView.text = maxScoreText + score.toString()
+        }
+
         Toast.makeText(this, getString(R.string.game_over_message, score.toString()), Toast.LENGTH_SHORT).show()
+
         resetGame()
     }
 
@@ -132,6 +161,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun resetGame() {
+
         score = 0
         gameScoreTextView.text = getString(R.string.your_score, score.toString())
         val initialTimeLeft = initialCountDown / 1000
@@ -170,7 +200,7 @@ class MainActivity : AppCompatActivity() {
      * we execute a method to show app information
      */
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if(item!!.itemId == R.id.action_about){
+        if (item!!.itemId == R.id.action_about) {
             showInfo()
         }
         return true
@@ -179,7 +209,7 @@ class MainActivity : AppCompatActivity() {
     /**
      * method which creates an Alert Dialog on menu item tap
      */
-    private fun showInfo(){
+    private fun showInfo() {
         Log.d(TAG, "Info Icon clicked.")
         // the info title contains the app version number, the user can see immediately which version he/she is using
         val dialogTitle = getString(R.string.about_title, BuildConfig.VERSION_NAME)
